@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.firechat.ui.chatactivity.ChatActivityViewModel" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.chatactivity.ChatActivity">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_message"
+            android:layout_width="match_parent"
+            android:layout_weight="9"
+            app:stackFromEnd="true"
+            app:reverseLayout="true"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="5dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_weight="9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/message_text"
+                    android:text="@={viewModel.messageText}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSend"
+                android:onClick="@{()->viewModel.sendMessage()}"
+                android:inputType="none"
+                android:layout_marginLeft="7dp"
+                android:layout_gravity="start"
+                android:text="@string/send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
