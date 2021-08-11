@@ -40,6 +40,7 @@ class MessageAdapter(var messageList: List<DocumentSnapshot>, var currentUser: S
         val messageContainer = holder.item.findViewById<LinearLayout>(R.id.message_container)
         val messageStyleElement = holder.item.findViewById<CardView>(R.id.style)
         val timestamp = holder.item.findViewById<TextView>(R.id.timestamp)
+        val sendID = holder.item.findViewById<TextView>(R.id.sender_id)
         timestamp.setTextColor(Color.GRAY)
         if (messageList[position].data!!.get("sender") == currentUser) {
             messageContainer.gravity = Gravity.END
@@ -52,8 +53,11 @@ class MessageAdapter(var messageList: List<DocumentSnapshot>, var currentUser: S
             var date = sendAt.toDate()
             val format: DateFormat = SimpleDateFormat("H:mm:a")
             timestamp.text = format.format(date)
+            sendID.visibility = View.GONE
         } else {
-            chatTextView.text = messageList[position].data!!
+            sendID.text = messageList[position].data!!
+                .get("sender").toString()
+                chatTextView.text = messageList[position].data!!
                 .get("message").toString()
             var sendAt = messageList[position].data!!
                 .get("sentAt") as Timestamp

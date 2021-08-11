@@ -1,12 +1,19 @@
 package com.example.firechat.ui.loginactivity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
+import com.example.firechat.R
 import com.example.firechat.ui.chatactivity.ChatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivityViewModel(application: Application) : AndroidViewModel(application) {
@@ -36,4 +43,6 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
         }
     }
+
+
 }

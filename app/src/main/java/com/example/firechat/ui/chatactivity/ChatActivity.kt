@@ -2,6 +2,8 @@ package com.example.firechat.ui.chatactivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
@@ -11,9 +13,11 @@ import com.example.firechat.R
 import com.example.firechat.adapter.MessageAdapter
 import com.example.firechat.databinding.ActivityChatBinding
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 class ChatActivity : AppCompatActivity() {
+    lateinit var auth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val user = intent.extras?.get("CURRENT_USER") as FirebaseUser
@@ -23,6 +27,12 @@ class ChatActivity : AppCompatActivity() {
         view.viewModel = viewModel
         viewModel.currentUserEmail = user.email!!
         supportActionBar!!.title = user.email!!
+        auth = FirebaseAuth.getInstance()
+        auth.addAuthStateListener {
+            if(it.currentUser == null){
+                finish()
+            }
+        }
         val sendBtn = findViewById<MaterialButton>(R.id.btnSend)
         val rc_chat = findViewById<RecyclerView>(R.id.rc_message)
         viewModel.messageText.observe(this, {
@@ -38,5 +48,21 @@ class ChatActivity : AppCompatActivity() {
                 rc_chat.adapter = messageAdapter
             }
         })
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.nav_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.logout -> {
+                auth.signOut()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
