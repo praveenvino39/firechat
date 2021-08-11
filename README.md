@@ -1,7 +1,8 @@
 🔥Fire Chat
 Simple Chat Application build with Firebase firestore.
 
-🚀 Features
+
+🚀 Features:
  * Register
  * Login
  * Google Sigin
